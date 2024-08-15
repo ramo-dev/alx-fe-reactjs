@@ -3,7 +3,7 @@ import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
 //import UserProfile from "./components/UserProfile";
 import Counter from "./components/Counter";
-import { userContext } from "./Context/UserContext";
+import { userContext } from "./UserContext";
 import ProfilePage from "./components/ProfilePage";
 
 
