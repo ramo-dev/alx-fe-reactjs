@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import AddRecipeForm from './components/AddRecipe'
+import AddRecipeForm from './components/AddRecipeForm'
 import RecipeList from './components/RecipeList'
 
 function App() {
