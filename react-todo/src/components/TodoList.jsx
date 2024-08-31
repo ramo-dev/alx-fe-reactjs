@@ -1,36 +1,30 @@
-import React, { useState } from 'react';
+// src/TodoList.js
+import React from 'react';
+import { useTodo } from './TodoContext';
 
 const TodoList = () => {
-  const [todos, setTodos] = useState([
-    { id: 1, text: 'Learn React', completed: false },
-    { id: 2, text: 'Build Todo App', completed: false },
-  ]);
+  const { todos, addTodo, toggleTodo, deleteTodo } = useTodo();
+  const [newTodoText, setNewTodoText] = React.useState('');
 
-  const addTodo = (text) => {
-    const newTodo = {
-      id: Date.now(),
-      text,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
-  };
-
-  const toggleTodo = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
-
-  const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!newTodoText.trim()) return;
+    addTodo(newTodoText);
+    setNewTodoText('');
   };
 
   return (
     <div>
       <h1>Todo List</h1>
-      <AddTodoForm addTodo={addTodo} />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={newTodoText}
+          onChange={(e) => setNewTodoText(e.target.value)}
+          placeholder="Add a new todo"
+        />
+        <button type="submit">Add Todo</button>
+      </form>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
@@ -48,29 +42,6 @@ const TodoList = () => {
         ))}
       </ul>
     </div>
-  );
-};
-
-const AddTodoForm = ({ addTodo }) => {
-  const [text, setText] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!text.trim()) return;
-    addTodo(text);
-    setText('');
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Add a new todo"
-      />
-      <button type="submit">Add Todo</button>
-    </form>
   );
 };
 
