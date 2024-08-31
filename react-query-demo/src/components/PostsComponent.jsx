@@ -10,7 +10,7 @@ const fetchData = async () => {
 
 const PostsComponent = () => {
 
-  const { data, isError, error, isLoading } = useQuery('fetchPosts', fetchData, {
+  const { data, isError, error, isLoading, refetch } = useQuery('fetchPosts', fetchData, {
 
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 1,
@@ -31,6 +31,7 @@ const PostsComponent = () => {
 
   return (
     <div>
+      <button onClick={refetch}>Refresh</button>
       {data.map((item) => (
         <div key={item.id}>
           <h1>{item.title}</h1>
