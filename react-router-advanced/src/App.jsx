@@ -1,11 +1,11 @@
-
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const isAuthenticated = false; // Simulate user login status
 
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -18,7 +18,10 @@ function App() {
         />
         <Route path="/blog/:postId" element={<BlogPost />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
+
+
+export default App;
 
