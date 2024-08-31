@@ -1,18 +1,24 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Profile from './pages/Profile';
-import Blog from './pages/Blog';
+
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
+  const isAuthenticated = false; // Simulate user login status
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile/*" element={<Profile />} />
-        <Route path="/blog/:postId" element={<Blog />} />
+        <Route
+          path="/profile/*"
+          element={
+            <ProtectedRoute isAuthenticated={isAuthenticated}>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/blog/:postId" element={<BlogPost />} />
       </Routes>
     </Router>
   );
 }
 
-export default App;
