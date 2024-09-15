@@ -13,7 +13,7 @@ const AddRecipeForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFields({
-      ...fields, [name]: value
+      ...fields, [name]: e.target.value
     });
   }
 
