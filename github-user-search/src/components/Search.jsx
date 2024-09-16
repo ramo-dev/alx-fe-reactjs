@@ -32,8 +32,12 @@ const Search = () => {
         : user ?
           user.map(user => (
             <div>
+              <img
+                src={user.avatar_url}
+              />
               <h2>{user.name}</h2>
-              <h2>{user.created_at}</h2>
+              <p>{user.created_at}</p>
+              <p>{user.login}</p>
             </div>
           )) :
           <h1>Looks like we cant find the user</h1>
