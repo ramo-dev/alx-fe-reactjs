@@ -69,7 +69,7 @@ const Search = () => {
           ))}
         </div>
       ) : (
-        <h1>No users found</h1>
+        <h1>Looks like we cant find the user</h1>
       )}
     </div>
   );
