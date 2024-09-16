@@ -2,50 +2,77 @@ import React, { useState } from "react";
 import { fetchUserData } from "../services/githubService";
 
 const Search = () => {
-  const [user, setUser] = useState([]);
-  const [prompt, setPrompt] = useState("");
+  const [users, setUsers] = useState([]);
+  const [username, setUsername] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
   const [loading, setLoading] = useState(false);
 
-
-
-  async function handleSearch(username) {
+  async function handleSearch() {
     setLoading(true);
-    const data = await fetchUserData(username)
-    setUser(data);
+    const data = await fetchUserData({ username, location, minRepos });
+    setUsers(data);
     setLoading(false);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleSearch(prompt);
+    handleSearch();
   }
 
-
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="search" onChange={(e) => setPrompt(e.target.value)} />
-        <button type="submit">Search</button>
+    <div className="p-6 max-w-lg mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          type="text"
+          placeholder="Search by username"
+          className="w-full p-2 border border-gray-300 rounded"
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Location"
+          className="w-full p-2 border border-gray-300 rounded"
+          onChange={(e) => setLocation(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Minimum Repositories"
+          className="w-full p-2 border border-gray-300 rounded"
+          onChange={(e) => setMinRepos(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 w-full rounded hover:bg-blue-600"
+        >
+          Search
+        </button>
       </form>
-      {loading ?
+
+      {loading ? (
         <h1>Loading...</h1>
-        : user ?
-          user.map(user => (
-            <div>
-              <img
-                src={user.avatar_url}
-              />
-              <h2>{user.name}</h2>
-              <p>{user.created_at}</p>
-              <p>{user.login}</p>
+      ) : users.length > 0 ? (
+        <div className="mt-4 space-y-4">
+          {users.map((user) => (
+            <div key={user.id} className="flex items-center space-x-4">
+              <img src={user.avatar_url} alt={user.login} className="w-16 h-16 rounded-full" />
+              <div>
+                <h2 className="text-xl font-bold">{user.login}</h2>
+                <p>Location: {user.location || "N/A"}</p>
+                <p>Repositories: {user.public_repos}</p>
+                <p>{user.login}</p>
+                <a href={user.html_url} target="_blank" rel="noopener noreferrer">
+                  View Profile
+                </a>
+              </div>
             </div>
-          )) :
-          <h1>Looks like we cant find the user</h1>
-      }
-
+          ))}
+        </div>
+      ) : (
+        <h1>No users found</h1>
+      )}
     </div>
-  )
-}
-
+  );
+};
 
 export default Search;
