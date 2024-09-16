@@ -14,7 +14,7 @@ export async function fetchUserData({ username, location, minRepos }) {
 
   try {
     const response = await axios.get(githubUrl);
-    return response.data.items; // Return list of users
+    return response.data.items;
   } catch (error) {
     console.error("Error fetching data:", error);
     return [];
